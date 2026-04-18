@@ -1,18 +1,9 @@
 #!/usr/bin/env bash
 
-MQTT_HOST=${MQTT_HOST:-localhost}
-MQTT_USERNAME=${MQTT_USERNAME:-username}
-MQTT_PASSWORD=${MQTT_PASSWORD:-password}
-MQTT_PORT=${MQTT_PORT:-1883}
-MQTT_PREFIX=${MQTT_PREFIX:-tibber}
-MQTT_RETURN_PREFIX=${MQTT_RETURN_PREFIX:-rtibber}
-DEVICE_ID=${DEVICE_ID:-han_meter_1}
-DEVICE_NAME=${DEVICE_NAME:-HAN Meter}
-MQTT_HA_USERNAME="mqtt"
-MQTT_HA_PASSWORD="mqtt"
-MQTT_HA_PORT="1883"
 
 RAW_TOPIC="han/raw"
+
+MQTT_OPTIONS=" -h ${MQTT_HOST} -u ${MQTT_USERNAME} -p ${MQTT_PORT} -P ${MQTT_PASSWORD}"
 
 declare -A CREATED
 
@@ -103,7 +94,7 @@ publish_discovery() {
 
   echo "[DISCOVERY] $name ($key)"
 
-  mosquitto_pub -r -h "$MQTT_HOST" \
+  mosquitto_pub -r ${MQTT_OPTIONS} \
     -t "homeassistant/sensor/${DEVICE_ID}_${key}/config" \
     -m "{
       \"name\": \"$name\",
@@ -123,7 +114,7 @@ publish_discovery() {
 
 echo "[INFO] Listening on $RAW_TOPIC..."
 
-mosquitto_sub -h "$MQTT_HOST" -u "${MQTT_USERNAME}" -p "${MQTT_PORT}" -P "${MQTT_PASSWORD}" -t "$RAW_TOPIC" | while read -r line
+mosquitto_sub ${MQTT_OPTIONS} -t "$RAW_TOPIC" | while read -r line
 do
   if [[ $line =~ ([0-9]-[0-9]:[0-9]+\.[0-9]+\.[0-9]+)\(([0-9.]+)\*?([A-Za-z]+)?\) ]]; then  
 
@@ -138,6 +129,5 @@ do
       CREATED[$KEY]=1
     fi
 
-    mosquitto_pub -h "${MQTT_HOST}" -u "${MQTT_HA_USERNAME}" -P "${MQTT_HA_PASSWORD}" -p "${MQTT_HA_PORT}" -t "${MQTT_PREFIX}/${KEY}" -m "${VALUE}"
+    mosquitto_pub ${MQTT_OPTIONS} -t "${MQTT_PREFIX}/${KEY}" -m "${VALUE}"
   fi
-done
