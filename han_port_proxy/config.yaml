@@ -1,5 +1,5 @@
 name: HA HAN Port Proxy
-version: "1.0.2"
+version: "1.0.4"
 slug: han_port_proxy
 description: "HAN Port Proxy with MQTT message generation and with full auto discovery"
 startup: services
@@ -17,7 +17,6 @@ options:
   mqtt_password: example
   device_name: "Power Grid Meter"
   device_id: "power_meter"
-  
 
 schema:
   mqtt_host: str

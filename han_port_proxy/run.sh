@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-"${ADDON_NAME:=power_meter}"
 
-BASE_DIR="/data/addon_config"
-TARGET_DIR="${BASE_DIR}/${ADDON_NAME}"
+TARGET_DIR="/data/addon_configs/han_power_meter"
 
 if [ ! -d "$TARGET_DIR" ]; then
   echo "[INFO] Creating config dir: $TARGET_DIR"
