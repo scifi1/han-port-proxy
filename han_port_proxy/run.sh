@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
-mkdir -p /addon_configs/${DEVICE_NAME}
-CONFIG_PATH=/addon_configs/${DEVICE_NAME}/options.yaml
+"${ADDON_NAME:=power_meter}"
+
+BASE_DIR="/data/addon_config"
+TARGET_DIR="${BASE_DIR}/${ADDON_NAME}"
+
+if [ ! -d "$TARGET_DIR" ]; then
+  echo "[INFO] Creating config dir: $TARGET_DIR"
+  mkdir -p "$TARGET_DIR"
+fi
+
+CONFIG_PATH=/${TARGET_DIR}/options.yaml
 
 MQTT_HOST=$(jq -r '.mqtt_host' $CONFIG_PATH)
 MQTT_PREFIX=$(jq -r '.mqtt_prefix' $CONFIG_PATH)
