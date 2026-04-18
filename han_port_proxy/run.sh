@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 
-
-TARGET_DIR="/data/addon_configs/han_power_meter"
-
-if [ ! -d "$TARGET_DIR" ]; then
-  echo "[INFO] Creating config dir: $TARGET_DIR"
-  mkdir -p "$TARGET_DIR"
-fi
-
-CONFIG_PATH=/${TARGET_DIR}/options.yaml
+CONFIG_PATH="/data/options.json"
 
 MQTT_HOST=$(jq -r '.mqtt_host' $CONFIG_PATH)
 MQTT_PREFIX=$(jq -r '.mqtt_prefix' $CONFIG_PATH)
