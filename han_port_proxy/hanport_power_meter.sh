@@ -120,7 +120,7 @@ publish_discovery() {
 
 echo "[INFO] Listening on $RAW_TOPIC..."
 
-mosquitto_sub -h "$MQTT_HOST" -t "$RAW_TOPIC" | while read -r line
+mosquitto_sub -h "$MQTT_HOST" -u "${MQTT_USERNAME" -P "${MQTT_PORT}" -p "${MQTT_PORT}" -t "$RAW_TOPIC" | while read -r line
 do
   if [[ $line =~ ([0-9]-[0-9]:[0-9]+\.[0-9]+\.[0-9]+)\(([0-9.]+)\*?([A-Za-z]+)? ]]; then
 
