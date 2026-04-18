@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
 
-RAW_TOPIC="han/raw"
+RAW_TOPIC="tibber"
 
 MQTT_SUB_OPTIONS=(
-  -h "$MQTT_HOST"
-  -p "$MQTT_PORT"
-  -u "$MQTT_USERNAME"
-  -P "$MQTT_PASSWORD"
+  -h "${MQTT_HOST}"
+  -p "${MQTT_PORT}"
+  -u "${MQTT_USERNAME}"
+  -P "${MQTT_PASSWORD}"
 )
 
 MQTT_PUB_OPTIONS=(
-  -h "$MQTT_HOST"
-  -p "$MQTT_PORT"
-  -u "$MQTT_USERNAME"
-  -P "$MQTT_PASSWORD"
+  -h "${MQTT_HOST}"
+  -p "${MQTT_PORT}"
+  -u "${MQTT_USERNAME}"
+  -P "${MQTT_PASSWORD}"
 )
 
 declare -A CREATED
