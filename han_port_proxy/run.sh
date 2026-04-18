@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+mkdir -p /addon_configs/${DEVICE_NAME}
+CONFIG_PATH=/addon_configs/${DEVICE_NAME}/options.yaml
+
+MQTT_HOST=$(jq -r '.mqtt_host' $CONFIG_PATH)
+MQTT_PREFIX=$(jq -r '.mqtt_prefix' $CONFIG_PATH)
+MQTT_RETURN_PREFIX=$(jq -r '.mqtt_rprefix' $CONFIG_PATH)
+MQTT_PORT=$(jq -r '.mqtt_port' $CONFIG_PATH)
+MQTT_USERNAME=$(jq -r '.mqtt_username' $CONFIG_PATH)
+MQTT_PASSWORD=$(jq -r '.mqtt_password' $CONFIG_PATH)
+DEVICE_NAME=$(jq -r '.device_name' $CONFIG_PATH)
+DEVICE_ID=$(jq -r '.device_id' $CONFIG_PATH)
+
+
+export MQTT_HOST MQTT_PREFIX DEVICE_NAME DEVICE_ID
+
+echo "[INFO] Starting with:"
+echo "MQTT_HOST=$MQTT_HOST"
+echo "PREFIX=$MQTT_PREFIX"
+
+while true; do
+  /hanport_power_meter.sh
+  echo "[WARN] Restarting in 5s..."
+  sleep 5
+done
