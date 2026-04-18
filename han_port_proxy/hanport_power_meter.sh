@@ -106,7 +106,7 @@ publish_discovery() {
 
   echo "[DISCOVERY] $name ($key)"
 
-  mosquitto_pub -r "${MQTT_PUB_OPTIONS[@]}" \
+  mosquitto_pub -r -h core-mosquitto -p 1883 -u mqtt -P mqtt \
     -t "homeassistant/sensor/${DEVICE_ID}_${key}/config" \
     -m "{
       \"name\": \"$name\",
@@ -125,8 +125,7 @@ publish_discovery() {
 }
 
 echo "[INFO] Listening on $RAW_TOPIC..."
-
-mosquitto_sub "${MQTT_SUB_OPTIONS[@]}" -t "$RAW_TOPIC" | while read -r line
+mosquitto_sub -h core-mosquitto -p 1883 -u mqtt -P mqtt -t "$RAW_TOPIC" | while read -r line
 do
   if [[ $line =~ ([0-9]-[0-9]:[0-9]+\.[0-9]+\.[0-9]+)\(([0-9.]+)\*?([A-Za-z]+)?\) ]]; then  
 
@@ -141,6 +140,5 @@ do
       CREATED[$KEY]=1
     fi
 
-    mosquitto_pub -r "${MQTT_PUB_OPTIONS[@]}"  -t "${MQTT_PREFIX}/${KEY}" -m "${VALUE}"
   fi
 done
