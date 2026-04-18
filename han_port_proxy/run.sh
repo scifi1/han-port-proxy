@@ -12,11 +12,16 @@ DEVICE_NAME=$(jq -r '.device_name' $CONFIG_PATH)
 DEVICE_ID=$(jq -r '.device_id' $CONFIG_PATH)
 
 
-export MQTT_HOST MQTT_PREFIX DEVICE_NAME DEVICE_ID
-
 echo "[INFO] Starting with:"
 echo "MQTT_HOST=$MQTT_HOST"
 echo "PREFIX=$MQTT_PREFIX"
+echo "MQTT_RETURN_PREFIX=$MQTT_RETURN_PREFIX"
+echo "MQTT_PORT=$MQTT_PORT"
+echo "MQTT_USERNAME=$MQTT_USERNAME"
+echo "MQTT_PASSWORD=$MQTT_PASSWORD"
+echo "DEVICE_NAME=$DEVICE_NAME"
+echo "DEVICE_ID=$DEVICE_ID"
+
 
 while true; do
   /hanport_power_meter.sh
