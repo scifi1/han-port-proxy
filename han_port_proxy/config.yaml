@@ -1,5 +1,5 @@
 name: HA HAN Port Proxy
-version: "1.0.8"
+version: "1.0.9"
 slug: han_port_proxy
 description: "HAN Port Proxy with MQTT message generation and with full auto discovery"
 startup: services
